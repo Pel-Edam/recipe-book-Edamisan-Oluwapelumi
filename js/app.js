@@ -1,10 +1,37 @@
-const hamburger = document.getElementById('hamburger');
-const nav = document.getElementById('nav');
+// ==================================================
+// Day 9: DOM Selection and Event Listeners
+// ==================================================
  
+// Step 1: Find the elements we need.
+// document.getElementById looks for an element by its id attribute.
+const hamburger = document.getElementById('hamburger');
+const nav       = document.getElementById('nav');
+ 
+// Step 2: Listen for a click on the hamburger button.
+// When clicked, toggle the 'open' class on the nav.
 hamburger.addEventListener('click', function() {
     nav.classList.toggle('open');
 });
-
+// ==================================================
+    
+// ==================================================
+ 
+// An object stores related data together as key: value pairs.
+const singleRecipe = {
+    id:           1,
+    name:         'Jollof Rice',
+    category:     'dinner',
+    cuisine:      'Nigerian',
+    emoji:        '🍚',
+    ingredients:  ['2 cups rice', 'Tomato paste', 'Onions', 'Seasoning'],
+    instructions: 'Fry tomato base, add stock, cook rice in sauce until tender.',
+    isFavorite:   false
+};
+ 
+// Access any value using dot notation:
+console.log(singleRecipe.name);           // 'Jollof Rice'
+console.log(singleRecipe.ingredients[0]); // '2 cups rice'
+console.log(singleRecipe.isFavorite);     // false
 // ==================================================
 // Step 1: Array of Recipes
 // ==================================================
@@ -48,7 +75,6 @@ let recipes = [
         isFavorite: false
     }
 ];
-
 // Find the grid container once.
 const recipeGrid = document.getElementById('recipeGrid');
  
@@ -87,7 +113,7 @@ function renderRecipes(recipesToShow) {
                     <div style='margin-top:8px'>${preview}</div>
                 </div>
                 <div class='card-actions'>
-                    <button class='btn-icon btn-delete'
+                <button class='btn-icon btn-delete'
                             data-id='${recipe.id}'>🗑 Delete</button>
                     <button class='btn-icon btn-shopping'
                             data-id='${recipe.id}'>🛒 Shop</button>
@@ -102,73 +128,14 @@ function renderRecipes(recipesToShow) {
     attachCardEvents();  // We write this later
 }
  
-function attachCardEvents() {
+// Placeholder so the app does not crash yet
+function attachCardEvents() {}
  
-    const deleteButtons = document.querySelectorAll('.btn-delete');
- 
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
- 
-            const id = Number(this.dataset.id);
- 
-            if (!confirm('Delete this recipe?')) return;
- 
-            recipes = recipes.filter(function(recipe) {
-                return recipe.id !== id;
-            });
-            saveToStorage();
- 
-            function init() {
-    loadFromStorage();      // Load saved data first
-    renderRecipes(recipes); // Then render whatever we have
-}
- 
-init();  // Run when page loads
-        });
-    });
- 
-    document.querySelectorAll('.btn-favorite').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            toggleFavorite(Number(this.dataset.id));
-        });
-    });
-    document.querySelectorAll('.btn-shopping').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            openShoppingList(Number(this.dataset.id));
-        });
-    });
-}
- 
-function toggleFavorite(recipeId) {
- 
-    const recipe = recipes.find(function(r) {
-        return r.id === recipeId;
-    });
- 
-    if (!recipe) return;
- 
-    recipe.isFavorite = !recipe.isFavorite;
- 
-    saveToStorage();
-    renderRecipes(recipes);
-}
-function openShoppingList(id) {}
-
-function saveToStorage() {
-    // JSON.stringify turns the recipes array into a JSON string
-    localStorage.setItem('recipebookData', JSON.stringify(recipes));
-}
- 
-function loadFromStorage() {
-    const stored = localStorage.getItem('recipebookData');
-    // If something was previously saved, use it
-    if (stored !== null) {
-        recipes = JSON.parse(stored);
-    }
-}
-
-// Calling the function 
+// Call the function immediately to show all recipes
 renderRecipes(recipes);
+// ==================================================
+// : Form Handling — Add a new recipe
+// ==================================================
  
 const modalOverlay  = document.getElementById('modalOverlay');
 const openFormBtn   = document.getElementById('openFormBtn');
@@ -192,7 +159,7 @@ modalOverlay.addEventListener('click', function(event) {
     }
 });
  
-// Save new recipe
+// Save the new recipe
 saveRecipeBtn.addEventListener('click', function() {
  
     const name     = document.getElementById('recipeName').value.trim();
@@ -224,7 +191,6 @@ saveRecipeBtn.addEventListener('click', function() {
     };
  
     recipes.push(newRecipe);
-    saveToStorage()
     renderRecipes(recipes);
     modalOverlay.classList.remove('open');
     clearForm();
@@ -237,7 +203,46 @@ function clearForm() {
     document.getElementById('recipeInstructions').value = '';
     document.getElementById('recipeEmoji').value = '';
 }
-
+// ==================================================
+//  Delete recipes using Array .filter()
+// ==================================================
+ 
+function attachCardEvents() {
+ 
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+ 
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+ 
+            const id = Number(this.dataset.id);
+ 
+            if (!confirm('Delete this recipe?')) return;
+ 
+            // Filter OUT the recipe with this ID.
+            // We keep all recipes where id does NOT match.
+            recipes = recipes.filter(function(recipe) {
+                return recipe.id !== id;
+            });
+ 
+            renderRecipes(recipes);
+        });
+    });
+ 
+    document.querySelectorAll('.btn-favorite').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            toggleFavorite(Number(this.dataset.id));
+        });
+    });
+    document.querySelectorAll('.btn-shopping').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            openShoppingList(Number(this.dataset.id));
+        });
+    });
+}
+ 
+// Placeholders — full versions coming soon
+function toggleFavorite(id) {}
+function openShoppingList(id) {}
 // ==================================================
 // Search — String methods + .filter()
 // ==================================================
@@ -267,7 +272,6 @@ function applyFilters() {
  
     renderRecipes(filtered);
 }
-
 // ==================================================
 //  Category Filter
 // ==================================================
@@ -277,7 +281,6 @@ const categoryFilter = document.getElementById('categoryFilter');
 categoryFilter.addEventListener('change', function() {
     applyFilters();   // Same function as the search — it handles both!
 });
-
 // ==================================================
 //  Shopping List — .find(), .map(), .join()
 // ==================================================
@@ -319,4 +322,47 @@ function openShoppingList(recipeId) {
  
     shoppingPanel.classList.add('open');
 }
+// ==================================================
+//Step 1: LocalStorage
+// ==================================================
+ 
+function saveToStorage() {
+    // JSON.stringify turns the recipes array into a JSON string
+    localStorage.setItem('recipebookData', JSON.stringify(recipes));
+}
+ 
+function loadFromStorage() {
+    const stored = localStorage.getItem('recipebookData');
+    // If something was previously saved, use it
+    if (stored !== null) {
+        recipes = JSON.parse(stored);
+    }
+}
+function toggleFavorite(recipeId) {
+ 
+    const recipe = recipes.find(function(r) {
+        return r.id === recipeId;
+    });
+ 
+    if (!recipe) return;
+ 
+    // Flip the boolean: true → false, false → true
+    recipe.isFavorite = !recipe.isFavorite;
+ 
+    saveToStorage();
+    renderRecipes(recipes);
+}
+// In the saveRecipeBtn handler, AFTER: recipes.push(newRecipe);
+// ADD this line:
+saveToStorage();
+ 
+// In the deleteButton handler, AFTER: recipes = recipes.filter(...);
+// ADD this line:
+saveToStorage();
+function init() {
+    loadFromStorage();      // Load saved data first
+    renderRecipes(recipes); // Then render whatever we have
+}
+ 
+init();  // Run when page loads
 

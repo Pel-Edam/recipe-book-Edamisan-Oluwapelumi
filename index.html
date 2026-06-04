@@ -1,105 +1,187 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Book</title>
     <link rel="stylesheet" href="css/style.css">
-    <title>FOOD TO IMAGINE</title>
 </head>
 <body>
-    <header class="header"> 
-       <div class="logo">
-         <span class="logo-icon">🍽️</span>
-         <span class="logo-text">
-            FOOD TO IMAGINE
-         </span>
-       </div>
-         <nav class="nav" id="nav">
-    <a href="#" class="nav-link"> Home</a>
-    <a href="#" class="nav-link"> Recommended Dishes</a>
-    <a href="#" class="nav-link"> Ingredient List</a>
-         </nav>
-        <button aria-label="hamburger" class="hamburger" id="hamburger">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🍽️</span>
+            <span class="logo-text">FOOD TO IMAGINE</span>
+        </div>
+
+        <nav class="nav" id="nav">
+            <a href="Home.html" class="nav-link">Home</a>
+            <a href="Recommended.html" class="nav-link">Recommended Dishes</a>
+            <a href="Ingredients.html" class="nav-link">Ingredient List</a>
+        </nav>
+
+        <button type="button" aria-label="Menu" class="hamburger" id="hamburger">
             <span></span>
             <span></span>
             <span></span>
         </button>
     </header>
+
+    <!-- HERO SECTION -->
     <section class="hero">
-      <h1 class="hero-title">
-        Discover & Save <span> Delicious recipes</span>
-      </h1>
-      <p class="hero-subtitle"> Cook Smarter. Eat better. Plan your meals with ease </p>
+        <h1 class="hero-title">
+            Discover & Save <span>Delicious Recipes</span>
+        </h1>
+        <p class="hero-subtitle">
+            Cook smarter. Eat better. Plan your meals with ease.
+        </p>
     </section>
+
+    <!-- MAIN CONTENT -->
     <main class="main">
-      <div class="control">
-<input type="text" class="search-input" id="searchInput" placeholder="Search for recipes"> 
-<select aria-label="type" id="categoryFilter" class="category-select">
-<option value="all">All</option>
-<option value="breakfast">Breakfast</option>
-<option value="lunch">Lunch</option>
-<option value="dinner">Dinner</option>
-<option value="snack">Snack</option>
-<option value="dessert">Desert</option>
-</select>
-<button class="btn-add">Add Recipes</button>
-      </div>
-    <!-- JavaScript will inject recipe cards here -->
-    <div class="recipe-grid" id="recipeGrid"></div>
-    </main>
-    <!-- ADD/EDIT RECIPE MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
- 
-        <button class="modal-close" id="modalClose">✕</button>
-        <h2 id="modalTitle">Add New Recipe</h2>
- 
-        <div class="form-group">
-            <label>Recipe Name</label>
-            <input type="text" id="recipeName" placeholder="e.g. Jollof Rice">
-        </div>
- 
-        <div class="form-group">
-            <label>Category</label>
-            <select id="recipeCategory">
+
+        <!-- CONTROLS -->
+        <div class="controls">
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search for recipes">
+
+            <select id="categoryFilter" class="category-select">
+                <option value="all">All</option>
                 <option value="breakfast">Breakfast</option>
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
                 <option value="snack">Snack</option>
                 <option value="dessert">Dessert</option>
             </select>
+
+            <button
+                type="button"
+                class="btn-add"
+                id="openFormBtn">
+                Add Recipe
+            </button>
+
         </div>
- 
-        <div class="form-group">
-            <label>Cuisine</label>
-            <input type="text" id="recipeCuisine" placeholder="e.g. Nigerian, Italian">
+
+        <!-- RECIPE GRID -->
+        <div class="recipe-grid" id="recipeGrid">
+
+            <!-- Sample Recipe Card -->
+            <div class="recipe-card">
+                <h3>Rice 🍚</h3>
+                <p>Category: Lunch</p>
+            </div>
+
         </div>
- 
-        <div class="form-group">
-            <label>Ingredients (one per line)</label>
-            <textarea id="recipeIngredients" rows="5"
-                      placeholder="Rice&#10;Tomatoes&#10;Onions"></textarea>
+
+    </main>
+
+    <!-- ADD / EDIT RECIPE MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+
+        <div class="modal">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="modalClose">
+                ✕
+            </button>
+
+            <h2 id="modalTitle">Add New Recipe</h2>
+
+            <div class="form-group">
+                <label for="recipeName">Recipe Name</label>
+                <input
+                    type="text"
+                    id="recipeName"
+                    placeholder="e.g. Jollof Rice">
+            </div>
+
+            <div class="form-group">
+                <label for="recipeCategory">Category</label>
+                <select id="recipeCategory">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="recipeCuisine">Cuisine</label>
+                <input
+                    type="text"
+                    id="recipeCuisine"
+                    placeholder="e.g. Nigerian, Italian">
+            </div>
+
+            <div class="form-group">
+                <label for="recipeIngredients">
+                    Ingredients (one per line)
+                </label>
+
+                <textarea
+                    id="recipeIngredients"
+                    rows="5"
+                    placeholder="Rice&#10;Tomatoes&#10;Onions"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recipeInstructions">Instructions</label>
+
+                <textarea
+                    id="recipeInstructions"
+                    rows="4"
+                    placeholder="Step by step..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recipeEmoji">Emoji (optional)</label>
+
+                <input
+                    type="text"
+                    id="recipeEmoji"
+                    placeholder="e.g. 🍚">
+            </div>
+
+            <button
+                type="button"
+                class="btn-submit"
+                id="saveRecipeBtn">
+                Save Recipe
+            </button>
+
         </div>
- 
-        <div class="form-group">
-            <label>Instructions</label>
-            <textarea id="recipeInstructions" rows="4"
-                      placeholder="Step by step..."></textarea>
-        </div>
- 
-        <div class="form-group">
-            <label>Emoji (optional)</label>
-            <input type="text" id="recipeEmoji" placeholder="e.g. 🍚">
-        </div>
-        <button class="btn-submit" id="saveRecipeBtn">Save Recipe</button>
+
     </div>
-    <!-- SHOPPING LIST SIDE PANEL -->
-<div class="shopping-panel" id="shoppingPanel">
-    <h2>Shopping List</h2>
-    <div id="shoppingItems"></div>
-    <button class="btn-close-panel" id="closeShoppingPanel">Close</button>
-    <script type="" src="js/app.js"></script>
-</div>
-</div>
+
+    <!-- SHOPPING LIST PANEL -->
+    <!-- <aside class="shopping-panel" id="shoppingPanel">
+
+        <h2>Shopping List</h2>
+
+        <div id="shoppingItems">
+            <!-- Items generated by JS -->
+        <!-- </div>
+
+        <button
+            type="button"
+            class="btn-close-panel"
+            id="closeShoppingPanel">
+            Close
+        </button>
+
+    </aside> -->
+
+    <script src="js/app.js"></script>
+
 </body>
 </html>
